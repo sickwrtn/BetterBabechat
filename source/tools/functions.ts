@@ -1,5 +1,10 @@
 import {debug} from "./debug";
 
+export function sleep(ms) {
+    const wakeUpTime = Date.now() + ms;
+    while (Date.now() < wakeUpTime) {}
+}
+
 //쿠키 가져오는 함수
 export function getCookie(name): string | undefined {
     let matches = document.cookie.match(new RegExp(
@@ -13,7 +18,12 @@ export function getCharacterId(): string{
 }
 
 export function getRoomId(): string{
-    return document.URL.split("/")[7].split("?")[1].split("=")[1];
+    try{
+        return document.URL.split("/")[7].split("?")[1].split("=")[1];
+    }
+    catch{
+        return "0";
+    }
 }
 
 // 클립보드의 텍스트를 가져오기

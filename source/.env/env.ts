@@ -1,7 +1,7 @@
 
 
 
-export const sendLimit = 1000;
+export const sendLimit = 2000;
 
 export const babe_api_url = "https://api.babechatapi.com";
 export const babe_api_url2 = "https://babechatapi.com";

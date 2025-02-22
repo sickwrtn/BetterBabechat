@@ -1,4 +1,4 @@
-import { getCharacterId, getRoomId, parent } from "../tools/functions";
+import { getCharacterId, getRoomId, parent, sleep } from "../tools/functions";
 import { ChatBar } from "../class/class";
 import * as env from "../.env/env";
 import { debug } from "../tools/debug";
@@ -106,7 +106,7 @@ function MemoryAfterburner_Modal(){
             var lastContent = {
                 content: []
             } 
-            for (const element of chatlog.messages.slice(0,Number(turn_limit.value))) {
+            for (const element of chatlog.messages.slice(0,Number(turn_limit.value) * 2)) {
                 if (element.role == "user"){
                     lastContent.content[lastContent.content.length] = {
                         message: element.content,
@@ -149,11 +149,15 @@ function MemoryAfterburner_Modal(){
                     if (index != dp-1){
                         let room = babe.getChatroom(getCharacterId(),getRoomId());
                         room.send("","free",0);
+                        sleep(1000);
+                        console.log(room.getMessages());
                         babe.getMessage(room.getMessages().messages[0]).set(result.substring(env.sendLimit * index,env.sendLimit * (index + 1)))
                     }
                     else{
                         let room = babe.getChatroom(getCharacterId(),getRoomId());
                         room.send("","free",0);
+                        sleep(1000);
+                        console.log(room.getMessages());
                         babe.getMessage(room.getMessages().messages[0]).set(result.substring(env.sendLimit * index));
                     }
                     if(!confirm(`메시지를 나눠서 보내는중... (${index + 1}/${dp})`)){
@@ -165,6 +169,8 @@ function MemoryAfterburner_Modal(){
             else{
                 let room = babe.getChatroom(getCharacterId(),getRoomId());
                 room.send("","free",0);
+                sleep(1000);
+                console.log(room.getMessages());
                 babe.getMessage(room.getMessages().messages[0]).set(result);
             }
             debug("wrtn.ai message sended");
