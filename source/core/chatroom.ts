@@ -148,12 +148,12 @@ function MemoryAfterburner_Modal(){
                 for (let index = 0; index < dp; index++) {
                     if (index != dp-1){
                         let room = babe.getChatroom(getCharacterId(),getRoomId());
-                        room.send("","free",getRoomId(),0);
+                        room.send("","free",0);
                         babe.getMessage(room.getMessages().messages[0]).set(result.substring(env.sendLimit * index,env.sendLimit * (index + 1)))
                     }
                     else{
                         let room = babe.getChatroom(getCharacterId(),getRoomId());
-                        room.send("","free",getRoomId(),0);
+                        room.send("","free",0);
                         babe.getMessage(room.getMessages().messages[0]).set(result.substring(env.sendLimit * index));
                     }
                     if(!confirm(`메시지를 나눠서 보내는중... (${index + 1}/${dp})`)){
@@ -164,7 +164,7 @@ function MemoryAfterburner_Modal(){
             }
             else{
                 let room = babe.getChatroom(getCharacterId(),getRoomId());
-                room.send("","free",getRoomId(),0);
+                room.send("","free",0);
                 babe.getMessage(room.getMessages().messages[0]).set(result);
             }
             debug("wrtn.ai message sended");

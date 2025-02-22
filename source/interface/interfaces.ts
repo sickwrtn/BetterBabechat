@@ -43,6 +43,67 @@ export interface ChatBarEvenListener{
     (new_button: HTMLButtonElement): void;
 }
 
+//SDK class 규격
+export interface message_class{
+    /**
+     * 대화 데이터
+     */
+    data: message;
+    /**
+     * 대화 데이터를 수정
+     * @param content 수정할 내용 
+     */
+    set(content: string): setMessageResponse;
+}
+
+export interface chatroom_class{
+    /**
+     * 채팅방 데이터
+     */
+    data : chatroom;
+    /**
+     * 해당 채팅방의 대화목록 가져오기
+     */
+    getMessages(): messageResponse;
+    /**
+     * 해당 채팅방에 메시지 보내기
+     * @param prompt 보낼 내용
+     * @param model 모델 pro,free만 사용해봄
+     * @param proChatCount ?
+     */
+    send(prompt: string,model: string,proChatCount: number): string;
+}
+
+export interface babe_api_class{
+    /**
+     * 유저 정보
+     */
+    getUser(): user;
+    /**
+     * 페르소나 목록 가져오기
+     */
+    getPersonas(): Array<persona>;
+    /**
+     * 활성화된 페르소나 가져오기 (페르소나 없으면 기본가져옴)
+     */
+    getActivePersona(): persona;
+    /**
+     * 채팅방 목록 조회
+     */
+    getChatrooms(): Array<chatroom>;
+    /**
+     * 채탕방 가져오기
+     * @param characterId 캐릭터 Id 
+     * @param roomId 채팅방 Id
+     */
+    getChatroom(characterId: string,roomId: string): chatroom_class;
+    /**
+     * 채팅가져오기
+     * @param data 채팅 데이터 
+     */
+    getMessage(data: message): message_class;
+}
+
 export interface userSocialLogin{
     email: string;
     name: string;
