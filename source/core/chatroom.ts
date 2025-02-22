@@ -20,6 +20,14 @@ function keysReleased(e) {
 export function chatroom(){
     const chatbar = document.getElementsByTagName("textarea").item(0);
     if(chatbar != null){
+        //textarea real-time apply
+        let lastest = [chatbar.className,chatbar.value];
+        setInterval(()=>{
+            if (lastest[0] != chatbar.className){
+                chatbar.value = lastest[1];
+            }
+            lastest = [chatbar.className,chatbar.value];
+        })
         //단축키 이벤트
         window.addEventListener("keydown", (e) => keysPressed(e,chatbar,text), false);
         window.addEventListener("keyup", (e)=>keysReleased(e), false);
@@ -28,11 +36,14 @@ export function chatroom(){
         const new_button = buttons.childNodes.item(0).cloneNode(true) as HTMLButtonElement;
         const text = new ChatBar(buttons,new_button);
         text.setPlus(() => {
+            if (chatbar.value == "") return alert("단축내용을 지정해주세요");
             text.add(String(text.button.length - 1),(button)=>{
                 chatbar.value += text.button[(text.button.length - 1) - Number(button.id)][1];
+                chatbar.textContent = chatbar.value;
             },chatbar.value);
         })
         text.setMinus(() => {
+            if (text.button.length == 2) return alert("삭제할 단축버튼이 없습니다.");
             text.pop();
         })
     }
