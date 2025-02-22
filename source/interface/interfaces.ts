@@ -42,3 +42,87 @@ export interface ChatBarEvenListener{
      */
     (new_button: HTMLButtonElement): void;
 }
+
+export interface userSocialLogin{
+    email: string;
+    name: string;
+    provider: string;
+    providerUserId: string;
+    userId: string;
+}
+
+export interface user {
+    dob: string;
+    email: string;
+    firstName: string;
+    gender: string;
+    imageUrl: string;
+    introduction: string;
+    isSafetyEnabled: boolean;
+    marketingConsent: boolean;
+    nickname: string;
+    notification: boolean;
+    phoneNumber: string;
+    profile: string;
+    provider: string;
+    referralCode: string;
+    referredBy: string;
+    refferedBy: string;
+    userSocialLogins: Array<userSocialLogin>
+}
+
+export interface chatroom {
+    id: number;
+    roomId: number;
+    isBabies: boolean;
+    name: string;
+    visibility: string;
+    isStoryMode: boolean;
+    isDeleted: boolean;
+    isViolated: boolean;
+    isAdult: boolean;
+    thumbnailImage: string;
+    characterId: string;
+    creatorId: string;
+    createdAt: string;
+    content: string;
+}
+
+export interface sendMessageData {
+    isMultipleImage: boolean;
+    model: string;
+    proChatCount: number;
+    prompt: string;
+    roomId: string;
+}
+
+export interface persona {
+    id: number;
+    userId: string;
+    gender: string;
+    dob: string;
+    nickname: string;
+    introduction: string;
+    isActive: boolean;
+    createdAt: string;
+    updatedAt : string;
+}
+
+export interface message {
+    content: string;
+    createdAt: string;
+    date: string;
+    emotion: string;
+    id: number;
+    location: string;
+    role: string;
+}
+
+export interface messageResponse {
+    count:number;
+    messages:Array<message>;
+}
+
+export interface setMessageResponse {
+    success:boolean;
+}
