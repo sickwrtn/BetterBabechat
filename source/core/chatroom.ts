@@ -23,7 +23,7 @@ export function chatroom(){
         //textarea real-time apply
         let lastest = [chatbar.className,chatbar.value];
         setInterval(()=>{
-            if (lastest[0] != chatbar.className){
+            if (lastest[0] != chatbar.className && lastest[1] != "" && chatbar.value != ""){
                 chatbar.value = lastest[1];
             }
             lastest = [chatbar.className,chatbar.value];
