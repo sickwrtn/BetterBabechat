@@ -3,7 +3,7 @@
 
 -채팅방 단축기능 O
 
--메모리애프터버너기능 X
+-메모리애프터버너기능 △ (css 변경 및 테스트/검토해봐야 함)
 
 -캐릭터 제작 복붙 및 게시기능 X
 
@@ -19,4 +19,13 @@
 ctrl + 숫자 단축키 사용가능
 
 https://github.com/user-attachments/assets/95e9cf98-d0c5-410f-8e6a-d725a710407a
+
+## 메모리 애프터 버너
+
+기억력 보강 기능
+
+https://github.com/user-attachments/assets/27fb3549-34d5-4f6a-b002-abd5e85fb3b1
+
+
+
 
