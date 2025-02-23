@@ -14,16 +14,19 @@ if (localStorage.getItem(env.local_Gemini_api_key) == null){
     }))
 }
 
-var lastest = "";
-setInterval(()=>{
-    if (document.URL != lastest){
-        if (document.URL.includes("character") && document.URL.includes("chat")){
-            chatroom();
+
+window.onload = ()=>{
+    var lastest = "";
+    setInterval(()=>{
+        if (document.URL != lastest){
+            if (document.URL.includes("character") && document.URL.includes("chat")){
+                chatroom();
+            }
+            console.log(`${lastest} -> ${document.URL}`);
         }
-        console.log(`${lastest} -> ${document.URL}`);
-    }
-    lastest = document.URL;
-})
+        lastest = document.URL;
+    })
+}
 
 //test
 /*

@@ -42,6 +42,9 @@ export interface ChatBarEvenListener{
      */
     (new_button: HTMLButtonElement): void;
 }
+export interface ChatOnloadEvent{
+    (chats: NodeListOf<ChildNode>,interval?: NodeJS.Timeout ): void;
+}
 
 //SDK class 규격
 export interface message_class{

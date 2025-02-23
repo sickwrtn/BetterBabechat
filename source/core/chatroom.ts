@@ -1,13 +1,16 @@
-import { getCharacterId, getRoomId, parent, sleep } from "../tools/functions";
+import { ChatOnload, ChatOnloadNoStop, ChatReload, getCharacterId, getRoomId, parent, sleep } from "../tools/functions";
 import { ChatBar } from "../class/class";
 import * as env from "../.env/env";
 import { debug } from "../tools/debug";
 import * as request from "../tools/requests";
 import { babe_api_class } from "../tools/sdk";
+import * as interfaces from "../interface/interfaces";
 
 const babe = new babe_api_class();
 
 var keys = [];
+
+var isReload: boolean = false;
 
 function keysPressed(e,chatbar: HTMLTextAreaElement,list: ChatBar) {
     keys[e.keyCode] = true;
@@ -183,35 +186,129 @@ function MemoryAfterburner_Modal(){
     document.body.appendChild(v.childNodes.item(0));
 }
 
-export function chatroom(){
-    const chatbar = document.getElementsByTagName("textarea").item(0);
-    if(chatbar != null){
-        //textarea real-time apply
-        let lastest = [chatbar.className,chatbar.value];
-        setInterval(()=>{
-            if (lastest[0] != chatbar.className && lastest[1] != "" && chatbar.value != ""){
-                chatbar.value = lastest[1];
+function sumButton(chatbar: HTMLTextAreaElement){
+    //textarea real-time apply
+    let lastest = [chatbar.className,chatbar.value];
+    setInterval(()=>{
+        if (lastest[0] != chatbar.className && lastest[1] != "" && chatbar.value != ""){
+            chatbar.value = lastest[1];
+        }
+        lastest = [chatbar.className,chatbar.value];
+    })
+    //단축키 이벤트
+    window.addEventListener("keydown", (e) => keysPressed(e,chatbar,text), false);
+    window.addEventListener("keyup", (e)=>keysReleased(e), false);
+    //단축버튼 추가
+    const buttons = parent(chatbar,2).childNodes.item(2) as HTMLDivElement;
+    const new_button = buttons.childNodes.item(0).cloneNode(true) as HTMLButtonElement;
+    const text = new ChatBar(buttons,new_button);
+    text.setPlus(() => {
+        if (chatbar.value == "") return alert("단축내용을 지정해주세요");
+        text.add(String(text.button.length - 1),(button)=>{
+            chatbar.value += text.button[(text.button.length - 1) - Number(button.id)][1];
+            chatbar.textContent = chatbar.value;
+        },chatbar.value);
+    })
+    text.setMinus(() => {
+        if (text.button.length == 2) return alert("삭제할 단축버튼이 없습니다.");
+        text.pop();
+    })
+}
+
+function ReloadOnclick(ReloadList,chats,chatroom){
+    isReload = true;
+    //리롤 버튼 누른후 리롤이 완료될때 event 실행
+    ChatReload(()=>{
+        isReload = false;
+        ReloadList[ReloadList.length] = [chats.item(chats.length - 3).cloneNode(true),chatroom.getMessages().messages[0]];
+        let now = chats.item(chats.length - 3) as HTMLElement;
+        let buttonTabs = now.getElementsByClassName(env.ChatBottumClass).item(1);
+        buttonTabs.childNodes.item(2).addEventListener('click',()=>{
+            ReloadOnclick(ReloadList,chats,chatroom);
+        })
+        for (let index = 0; index < ReloadList.length; index++) {
+            let button = buttonTabs.childNodes.item(2).cloneNode(true)
+            button.textContent = `${index + 1}`;
+            button.addEventListener('click',()=>{
+                babe.getMessage(chatroom.getMessages().messages[0]).set(ReloadList[index][1].content);
+                for (const i of Array.from(now.childNodes[0].childNodes).slice(0,now.childNodes[0].childNodes.length - 1)) {
+                    i.remove();
+                }
+                for (const i of Array.from(ReloadList[index][0].cloneNode(true).childNodes[0].childNodes).slice(0,ReloadList[index][0].childNodes[0].childNodes.length - 1).reverse()){
+                    (now.childNodes.item(0) as HTMLDivElement).insertAdjacentElement("afterbegin",(i as Element));
+                }
+                now.childNodes[0].childNodes[now.childNodes[0].childNodes.length - 1].childNodes.item(0).remove();
+                (now.childNodes[0].childNodes.item(now.childNodes[0].childNodes.length - 1) as HTMLDivElement).insertAdjacentElement("afterbegin",(ReloadList[index][0].cloneNode(true).childNodes[0].childNodes[ReloadList[index][0].childNodes[0].childNodes.length - 1].childNodes.item(0) as Element));
+            })
+            buttonTabs.appendChild(button);
+        }
+    })
+}
+
+function onload(chats){
+    //현재 채팅방을 가져오기
+    const chatroom = babe.getChatroom(getCharacterId(),getRoomId());
+    if (chatroom == undefined) return console.log("ㅇㅇ");
+    //비교할 리롤 목록 리스트
+    var ReloadList: Array<[Node,interfaces.message]> = [];
+    //현재 focus 된 채팅 가져오기
+    let chat = chats.item(chats.length - 3) as HTMLElement;
+    //리롤 리스트에 focus 된 채팅 리롤 목록에 저장
+    ReloadList[ReloadList.length] = [chat.cloneNode(true),chatroom.getMessages().messages[0]];
+    //focus 된 채팅의 리롤 버튼에 Event 추가
+    if (chat.getElementsByClassName(env.ChatBottumClass).item(1) != null){
+        chat.getElementsByClassName(env.ChatBottumClass).item(1).childNodes.item(2).addEventListener('click',()=>{
+            ReloadOnclick(ReloadList,chats,chatroom);
+        });
+    }
+    else {
+        return;
+    }
+}
+
+export function ChatReceived(chats,event){
+    let url = document.URL;
+    let lastest = 0;
+    let check = 0;
+    let c = setInterval(()=>{
+        if (document.URL != url){
+            clearInterval(c);
+        }
+        if (lastest != 0){
+            if(lastest != chats.length && check == 0 && isReload == false){
+                check++;
             }
-            lastest = [chatbar.className,chatbar.value];
-        })
-        //단축키 이벤트
-        window.addEventListener("keydown", (e) => keysPressed(e,chatbar,text), false);
-        window.addEventListener("keyup", (e)=>keysReleased(e), false);
-        //단축버튼 추가
-        const buttons = parent(chatbar,2).childNodes.item(2) as HTMLDivElement;
-        const new_button = buttons.childNodes.item(0).cloneNode(true) as HTMLButtonElement;
-        const text = new ChatBar(buttons,new_button);
-        text.setPlus(() => {
-            if (chatbar.value == "") return alert("단축내용을 지정해주세요");
-            text.add(String(text.button.length - 1),(button)=>{
-                chatbar.value += text.button[(text.button.length - 1) - Number(button.id)][1];
-                chatbar.textContent = chatbar.value;
-            },chatbar.value);
-        })
-        text.setMinus(() => {
-            if (text.button.length == 2) return alert("삭제할 단축버튼이 없습니다.");
-            text.pop();
-        })
+            else if(lastest != chats.length && check == 1 && isReload == false){
+                event(chats);
+                check = 0;
+            }
+            else if(lastest > chats.length){
+                check = 0;
+            }
+        }
+        lastest = chats.length;
+    })
+}
+
+export function chatroom(){
+    //채팅방의 채팅바 선택
+    const chatbar = document.getElementsByTagName("textarea").item(0) as HTMLTextAreaElement;
+    if(chatbar != null){
+        //기존 버튼이 없을시
+        if (parent(chatbar,2).childNodes.item(2).childNodes.length == 3){
+            //단축버튼 기능
+            sumButton(chatbar);
+        }
+        //채팅 로드가 완료 되었을시
+        ChatOnload((chats)=>{
+            if (babe.getChatroom(getCharacterId(),getRoomId()) != undefined){
+                onload(chats);
+            }
+            ChatReceived(chats,()=>{
+                onload(chats);
+                console.log("event");
+            })
+        });
     }
     setInterval(()=>{
         if (document.URL.includes('character') && document.URL.includes('chat')){

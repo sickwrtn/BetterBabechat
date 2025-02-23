@@ -1,8 +1,9 @@
 
 
-
+//environment
 export const sendLimit = 2000;
 
+//local and url
 export const babe_api_url = "https://api.babechatapi.com";
 export const babe_api_url2 = "https://babechatapi.com";
 export const gemini_api_url = "https://generativelanguage.googleapis.com";
@@ -11,6 +12,10 @@ export const local_Gemini_api_key = "Gemini Api Key";
 
 //class
 export const ChatSaveMenuClass = "grid grid-cols-2";
+export const ChatBottumClass = "flex gap-3";
+
+//Id
+export const MessageAreaId = "messages-area";
 
 //svg 코드
 export const PlusButton_svg_d = "M 524 250 c 0 17.7 -8 32 -32 32 H 317 v 176 c 0 17.7 -14.3 32 -32 32 s -32 -14.3 -32 -32 V 284 H 64 c -17.7 0 -32 -14.3 -32 -32 s 14.3 -32 32 -32 h 189 V 64 c 0 -17.7 14.3 -32 32 -32 s 32 14.3 32 32 v 157 h 176 c 24 1 31 13 31 28 z";

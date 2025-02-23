@@ -1,4 +1,6 @@
 import {debug} from "./debug";
+import * as env from "../.env/env";
+import * as interfaces from "../interface/interfaces";
 
 export function sleep(ms) {
     const wakeUpTime = Date.now() + ms;
@@ -24,6 +26,45 @@ export function getRoomId(): string{
     catch{
         return "0";
     }
+}
+
+export function ChatOnload(event: interfaces.ChatOnloadEvent): void{
+    var t = setInterval(()=>{
+        let c = document.getElementById(env.MessageAreaId).childNodes.item(0);
+        if (Number((c.childNodes.item(c.childNodes.length - 1) as HTMLDivElement).getAttribute("data-index")) == c.childNodes.length - 1){
+            event(c.childNodes);
+            clearInterval(t);
+        }
+    })
+}
+
+export function ChatOnloadNoStop(event: interfaces.ChatOnloadEvent): void{
+    var t = setInterval(()=>{
+        let c = document.getElementById(env.MessageAreaId).childNodes.item(0);
+        if (Number((c.childNodes.item(c.childNodes.length - 1) as HTMLDivElement).getAttribute("data-index")) == c.childNodes.length - 1){
+            event(c.childNodes,t);
+        }
+    });
+}
+
+export function ChatReload(event){
+    let a = 0;
+    ChatOnloadNoStop((chat,t)=>{
+        if( a == 0){
+            if (chat.item(chat.length - 3).childNodes[0].childNodes.length == 1){
+                a++;
+            }
+        }
+        if (a == 1){
+            if (chat.item(chat.length - 3).childNodes[0].childNodes.length > 1){
+                a++;
+            }
+        }
+        if (a == 2){
+            event();
+            clearInterval(t);
+        }
+    })
 }
 
 // 클립보드의 텍스트를 가져오기

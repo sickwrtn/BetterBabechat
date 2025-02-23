@@ -7,7 +7,6 @@ export class message_class implements interfaces.message_class{
     data: interfaces.message
     constructor(data){
         this.data = data;
-        console.log(data);
     }
     set(content: string): interfaces.setMessageResponse{
         return request.putAfetch(env.babe_api_url + `/ko/api/edit-message/${this.data.id}`,{
