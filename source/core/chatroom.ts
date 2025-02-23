@@ -219,7 +219,7 @@ export function chatroom(){
             if (ChatSaveMenu != null){
                 const MemoryAfterburnerMenu = ChatSaveMenu.childNodes.item(0).cloneNode(true) as HTMLButtonElement;
                 if (ChatSaveMenu.childNodes.length == 2){
-                    MemoryAfterburnerMenu.innerHTML = env.MemoryAfterburner_frontHtml + "기억력 보강";
+                    MemoryAfterburnerMenu.innerHTML = env.MemoryAfterburner_frontHtml + "애프터버너";
                     MemoryAfterburnerMenu.addEventListener('click',MemoryAfterburner_Modal)
                     ChatSaveMenu.appendChild(MemoryAfterburnerMenu);
                 }
