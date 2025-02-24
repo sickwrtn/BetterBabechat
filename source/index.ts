@@ -27,12 +27,3 @@ window.onload = ()=>{
         lastest = document.URL;
     })
 }
-
-//test
-/*
-if (true == true){
-    const babe = new babe_api_class();
-    console.log(babe.getChatroom(babe.getChatrooms()[0].characterId).send("테ss","free","0",0));
-    console.log(babe.getChatroom(babe.getChatrooms()[0].characterId).getMessages());
-}
-    */

@@ -12,6 +12,10 @@ var keys = [];
 
 var isReload: boolean = false;
 
+setInterval(()=>{
+    console.log(isReload);
+},300)
+
 function keysPressed(e,chatbar: HTMLTextAreaElement,list: ChatBar) {
     keys[e.keyCode] = true;
     for (let i = 0; i < 58; i++) {
@@ -219,6 +223,7 @@ function ReloadOnclick(ReloadList,chats,chatroom){
     isReload = true;
     //리롤 버튼 누른후 리롤이 완료될때 event 실행
     ChatReload(()=>{
+        console.log("ext");
         isReload = false;
         ReloadList[ReloadList.length] = [chats.item(chats.length - 3).cloneNode(true),chatroom.getMessages().messages[0]];
         let now = chats.item(chats.length - 3) as HTMLElement;
@@ -245,10 +250,10 @@ function ReloadOnclick(ReloadList,chats,chatroom){
     })
 }
 
-function onload(chats){
+function onload(chats): boolean{
     //현재 채팅방을 가져오기
     const chatroom = babe.getChatroom(getCharacterId(),getRoomId());
-    if (chatroom == undefined) return console.log("ㅇㅇ");
+    if (chatroom == undefined) return true;
     //비교할 리롤 목록 리스트
     var ReloadList: Array<[Node,interfaces.message]> = [];
     //현재 focus 된 채팅 가져오기
@@ -260,9 +265,10 @@ function onload(chats){
         chat.getElementsByClassName(env.ChatBottumClass).item(1).childNodes.item(2).addEventListener('click',()=>{
             ReloadOnclick(ReloadList,chats,chatroom);
         });
+        return true;
     }
     else {
-        return;
+        return false;
     }
 }
 
@@ -295,18 +301,27 @@ export function chatroom(){
     const chatbar = document.getElementsByTagName("textarea").item(0) as HTMLTextAreaElement;
     if(chatbar != null){
         //기존 버튼이 없을시
-        if (parent(chatbar,2).childNodes.item(2).childNodes.length == 3){
+        if (parent(chatbar,2).childNodes.item(2).childNodes.length < 4){
             //단축버튼 기능
             sumButton(chatbar);
         }
         //채팅 로드가 완료 되었을시
         ChatOnload((chats)=>{
             if (babe.getChatroom(getCharacterId(),getRoomId()) != undefined){
-                onload(chats);
+                let c = setInterval(()=>{
+                    if (onload(chats)){
+                        console.log("event2");
+                        clearInterval(c);
+                    }
+                })
             }
             ChatReceived(chats,()=>{
-                onload(chats);
-                console.log("event");
+                let c = setInterval(()=>{
+                    if (onload(chats)){
+                        console.log("event");
+                        clearInterval(c);
+                    }
+                })
             })
         });
     }
