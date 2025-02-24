@@ -1,13 +1,15 @@
 
 # TODO
 
--채팅방 단축기능 O
+-채팅방 단축기능 O (개선중)
 
--메모리애프터버너기능 △ (테스트/검토해봐야 함)
+-메모리애프터버너기능 O(개선중)
+
+-답변 비교 기능 △ (테스트/검토해봐야 함)
 
 -캐릭터 제작 복붙 및 게시기능 X
 
--답변 비교 기능 X
+-모든 과거 대화기록 수정 기능 X
 
 -테마기능 X
 
@@ -24,11 +26,11 @@ https://github.com/user-attachments/assets/95e9cf98-d0c5-410f-8e6a-d725a710407a
 
 기억력 보강 기능
 
-
-
 https://github.com/user-attachments/assets/0ef413c0-1927-420e-9ea5-f0a526ab1e55
 
+## 답변 비교기능
 
+https://github.com/user-attachments/assets/d8a2193d-b6bc-40ad-bf92-618b5f7c7213
 
 # 코드관련
 ## babechat api SDK
