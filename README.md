@@ -20,9 +20,13 @@
 
 ctrl + 숫자 단축키 사용가능
 
-https://github.com/user-attachments/assets/95e9cf98-d0c5-410f-8e6a-d725a710407a
+
 
 ## 메모리 애프터 버너
+
+
+https://github.com/user-attachments/assets/678d3070-7ecd-4339-87d8-bc53a2ceb1f5
+
 
 기억력 보강 기능
 
