@@ -19,9 +19,11 @@ setInterval(()=>{
 function keysPressed(e,chatbar: HTMLTextAreaElement,list: ChatBar) {
     keys[e.keyCode] = true;
     for (let i = 0; i < 58; i++) {
-            if (keys[17] && keys[49 + i]) {
-            chatbar.value += list.button[(list.button.length - 2) - i][1];
-            e.preventDefault();	 // prevent default browser behavior
+        if (keys[17] && keys[49 + i]) {
+            if (list.button[(list.button.length - 2) - i][1] != undefined){
+                chatbar.value += list.button[(list.button.length - 2) - i][1];
+                e.preventDefault();	 // prevent default browser behavior
+            }
         }
     }
 }
@@ -196,6 +198,7 @@ function sumButton(chatbar: HTMLTextAreaElement){
     setInterval(()=>{
         if (lastest[0] != chatbar.className && lastest[1] != "" && chatbar.value != ""){
             chatbar.value = lastest[1];
+            console.log("asd");
         }
         lastest = [chatbar.className,chatbar.value];
     })
@@ -204,6 +207,7 @@ function sumButton(chatbar: HTMLTextAreaElement){
     window.addEventListener("keyup", (e)=>keysReleased(e), false);
     //단축버튼 추가
     const buttons = parent(chatbar,2).childNodes.item(2) as HTMLDivElement;
+    buttons.style.cssText = `position: absolute; bottom: 50px; border: 1px solid; border-radius: 20px; border-color: rgba(221,221,221,0.8); padding-right: 5px;`
     const new_button = buttons.childNodes.item(0).cloneNode(true) as HTMLButtonElement;
     const text = new ChatBar(buttons,new_button);
     text.setPlus(() => {
