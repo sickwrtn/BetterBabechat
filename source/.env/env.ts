@@ -1,5 +1,8 @@
 
 
+//namespace
+export const MemoryAfterburner_name = "애프터버너";
+
 //environment
 export const sendLimit = 2000;
 

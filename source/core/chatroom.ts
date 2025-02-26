@@ -195,10 +195,22 @@ function MemoryAfterburner_Modal(){
 function sumButton(chatbar: HTMLTextAreaElement){
     //textarea real-time apply
     let lastest = [chatbar.className,chatbar.value];
-    setInterval(()=>{
-        if (lastest[0] != chatbar.className && lastest[1] != "" && chatbar.value != ""){
-            chatbar.value = lastest[1];
-            console.log("asd");
+    //수정 필요
+    let ifchangedclass = setInterval(()=>{
+        if (document.URL.includes('character') && document.URL.split("/").length > 6){
+            if (lastest[0] != chatbar.className){
+                if (lastest[1] == "" && chatbar.value.length == 1){
+                }
+                else if (chatbar.value == "" && lastest[1].length == 1){
+                }
+                else{
+                    chatbar.value = lastest[1];
+                }
+            }
+        }
+        else{
+            debug("ifchangedclass",6);
+            clearInterval(ifchangedclass);
         }
         lastest = [chatbar.className,chatbar.value];
     })
@@ -227,7 +239,6 @@ function ReloadOnclick(ReloadList,chats,chatroom){
     isReload = true;
     //리롤 버튼 누른후 리롤이 완료될때 event 실행
     ChatReload(()=>{
-        console.log("ext");
         isReload = false;
         ReloadList[ReloadList.length] = [chats.item(chats.length - 3).cloneNode(true),chatroom.getMessages().messages[0]];
         let now = chats.item(chats.length - 3) as HTMLElement;
@@ -280,9 +291,10 @@ export function ChatReceived(chats,event){
     let url = document.URL;
     let lastest = 0;
     let check = 0;
-    let c = setInterval(()=>{
+    let checkReceived = setInterval(()=>{
         if (document.URL != url){
-            clearInterval(c);
+            debug("checkReceived",6);
+            clearInterval(checkReceived);
         }
         if (lastest != 0){
             if(lastest != chats.length && check == 0 && isReload == false){
@@ -312,36 +324,37 @@ export function chatroom(){
         //채팅 로드가 완료 되었을시
         ChatOnload((chats)=>{
             if (babe.getChatroom(getCharacterId(),getRoomId()) != undefined){
-                let c = setInterval(()=>{
+                let checkOnload = setInterval(()=>{
                     if (onload(chats)){
-                        console.log("event2");
-                        clearInterval(c);
+                        debug("checkOnload inital",6);
+                        clearInterval(checkOnload);
                     }
                 })
             }
             ChatReceived(chats,()=>{
-                let c = setInterval(()=>{
+                let checkOnload = setInterval(()=>{
+                    debug("checkOnload Received",6);
                     if (onload(chats)){
-                        console.log("event");
-                        clearInterval(c);
+                        clearInterval(checkOnload);
                     }
                 })
             })
         });
     }
     let apply_chatMenu = setInterval(()=>{
-        if (document.URL.includes('character') && document.URL.includes('chat') && document.URL.split("/").length > 6){
+        if (document.URL.includes('character') && document.URL.split("/").length > 6){
             const ChatSaveMenu = document.getElementsByClassName(env.ChatSaveMenuClass).item(0) as HTMLDivElement;
             if (ChatSaveMenu != null){
                 const MemoryAfterburnerMenu = ChatSaveMenu.childNodes.item(0).cloneNode(true) as HTMLButtonElement;
                 if (ChatSaveMenu.childNodes.length == 2){
-                    MemoryAfterburnerMenu.innerHTML = env.MemoryAfterburner_frontHtml + "애프터버너";
+                    MemoryAfterburnerMenu.innerHTML = env.MemoryAfterburner_frontHtml + env.MemoryAfterburner_name;
                     MemoryAfterburnerMenu.addEventListener('click',MemoryAfterburner_Modal)
                     ChatSaveMenu.appendChild(MemoryAfterburnerMenu);
                 }
             }
         }
         else {
+            debug("apply_chatMenu",6);
             clearInterval(apply_chatMenu);
         }
     })

@@ -19,7 +19,7 @@ window.onload = ()=>{
     var lastest = "";
     setInterval(()=>{
         if (document.URL != lastest){
-            if (document.URL.includes("character") && document.URL.includes("chat") && document.URL.split("/").length > 6){
+            if (document.URL.includes("character") && document.URL.split("/").length > 6){
                 chatroom();
             }
             console.log(`${lastest} -> ${document.URL}`);
