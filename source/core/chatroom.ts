@@ -223,7 +223,7 @@ function sumButton(chatbar: HTMLTextAreaElement){
     window.addEventListener("keyup", (e)=>keysReleased(e), false);
     //단축버튼 추가
     const buttons = parent(chatbar,2).childNodes.item(2) as HTMLDivElement;
-    buttons.style.cssText = `position: absolute; bottom: 50px; border: 1px solid; border-radius: 20px; border-color: rgba(221,221,221,0.8); padding-right: 5px;`
+    buttons.style.cssText = `position: absolute; bottom: 110%; border: 1px solid; border-radius: 20px; border-color: rgba(221,221,221,0.8); padding-right: 5px;`
     const new_button = buttons.childNodes.item(0).cloneNode(true) as HTMLButtonElement;
     const text = new ChatBar(buttons,new_button);
     text.setPlus(() => {
@@ -322,8 +322,7 @@ export function ChatReceived(chats,event){
         lastest = chats.length;
     })
 }
-
-export function chatroom(){
+export function chatroom(): void{
     //채팅방의 채팅바 선택
     const chatbar = document.getElementsByTagName("textarea").item(0) as HTMLTextAreaElement;
     if(chatbar != null){
