@@ -14,6 +14,7 @@ if (localStorage.getItem(env.local_Gemini_api_key) == null){
     }))
 }
 
+console.log("test");
 window.onload = ()=>{
     var lastest = "";
     setInterval(()=>{
