@@ -329,8 +329,8 @@ export function chatroom(){
             })
         });
     }
-    setInterval(()=>{
-        if (document.URL.includes('character') && document.URL.includes('chat')){
+    let apply_chatMenu = setInterval(()=>{
+        if (document.URL.includes('character') && document.URL.includes('chat') && document.URL.split("/").length > 6){
             const ChatSaveMenu = document.getElementsByClassName(env.ChatSaveMenuClass).item(0) as HTMLDivElement;
             if (ChatSaveMenu != null){
                 const MemoryAfterburnerMenu = ChatSaveMenu.childNodes.item(0).cloneNode(true) as HTMLButtonElement;
@@ -340,6 +340,9 @@ export function chatroom(){
                     ChatSaveMenu.appendChild(MemoryAfterburnerMenu);
                 }
             }
+        }
+        else {
+            clearInterval(apply_chatMenu);
         }
     })
 }
