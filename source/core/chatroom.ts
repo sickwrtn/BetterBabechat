@@ -10,12 +10,14 @@ const babe = new babe_api_class();
 
 var keys = [];
 
+//리롤중인지 기록
 var isReload: boolean = false;
 
 setInterval(()=>{
     console.log(isReload);
 },300)
 
+//단축키
 function keysPressed(e,chatbar: HTMLTextAreaElement,list: ChatBar) {
     keys[e.keyCode] = true;
     for (let i = 0; i < 58; i++) {
@@ -32,6 +34,7 @@ function keysReleased(e) {
     keys[e.keyCode] = false;
 }
 
+//메모리 애프터버너
 function MemoryAfterburner_Modal(){
     const v = document.createElement('div');
     v.innerHTML = env.MemoryAfterburner_modalHtml;
@@ -192,6 +195,7 @@ function MemoryAfterburner_Modal(){
     document.body.appendChild(v.childNodes.item(0));
 }
 
+//단축버튼 추가
 function sumButton(chatbar: HTMLTextAreaElement){
     //textarea real-time apply
     let lastest = [chatbar.className,chatbar.value];
@@ -240,6 +244,10 @@ function ReloadOnclick(ReloadList,chats,chatroom){
     //리롤 버튼 누른후 리롤이 완료될때 event 실행
     ChatReload(()=>{
         isReload = false;
+        /*
+        리롤전 답변을 html 통짜로 저장후 기록 해둠 (내용포함) 
+        그 후 기존 이벤트 리스너가 들어있는 bottom 만 남겨놓고 전부 삭제
+        */
         ReloadList[ReloadList.length] = [chats.item(chats.length - 3).cloneNode(true),chatroom.getMessages().messages[0]];
         let now = chats.item(chats.length - 3) as HTMLElement;
         let buttonTabs = now.getElementsByClassName(env.ChatBottumClass).item(1);
@@ -288,6 +296,9 @@ function onload(chats): boolean{
 }
 
 export function ChatReceived(chats,event){
+    /* 
+    단계적으로 check를 증가 시키며 리롤 과정을 추적 리롤 중일경우 작동 X
+    */
     let url = document.URL;
     let lastest = 0;
     let check = 0;
