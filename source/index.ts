@@ -2,6 +2,7 @@ import { chatroom } from "./core/chatroom";
 import { babe_api_class } from "./tools/sdk";
 import { getCookie } from "./tools/functions";
 import * as env from "./.env/env";
+import { myCharacter } from "./core/myCharacter";
 
 //Gemini api key 스토리지 초기설정
 if (localStorage.getItem(env.local_Gemini_api_key) == null){
@@ -14,13 +15,21 @@ if (localStorage.getItem(env.local_Gemini_api_key) == null){
     }))
 }
 
-console.log("test");
+const babe = new babe_api_class();
+
+console.log(babe.getMyCharacters({sort:"popular",tab:"all"}));
+console.log(babe.getMyCharacters({sort:"likes",tab:"all"}));
+
 window.onload = ()=>{
     var lastest = "";
     setInterval(()=>{
         if (document.URL != lastest){
-            if (document.URL.includes("character") && document.URL.split("/").length > 6){
+            //what the fuck?
+            if (document.URL.includes("character") && document.URL.split("/").length > 6 && !document.URL.includes("edit") && !document.URL.includes("profile")){
                 chatroom();
+            }
+            if (document.URL.includes("character") && document.URL.includes("my")){
+                myCharacter();
             }
             console.log(`${lastest} -> ${document.URL}`);
         }

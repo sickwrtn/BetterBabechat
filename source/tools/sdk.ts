@@ -1,6 +1,7 @@
 import * as interfaces from "../interface/interfaces";
 import * as request from "../tools/requests";
 import * as env from "../.env/env";
+import { reParams } from "./functions";
 
 
 export class message_class implements interfaces.message_class{
@@ -35,6 +36,13 @@ export class chatroom_class implements interfaces.chatroom_class{
     }
 }
 
+export class myCharacter {
+    data : interfaces.myCharacter;
+    constructor(data){
+        this.data = data;
+    }
+}
+
 export class babe_api_class implements interfaces.babe_api_class {
     getUser(): interfaces.user{
         return request.getAfetch(env.babe_api_url + "/ko/api/user");
@@ -62,6 +70,18 @@ export class babe_api_class implements interfaces.babe_api_class {
             updatedAt:""
         }
         return result;
+    }
+    getMyCharacters(params): Array<interfaces.character>{
+        let response: Array<interfaces.character> = request.getAfetch(env.babe_api_url + "/ko/api/characters/my?" + reParams(params));
+        /*
+        if (params.sort == "likes"){
+            response.sort((a: interfaces.character,b: interfaces.character) => b.likeCount - a.likeCount); 
+        }
+            */
+        return response;
+    }
+    getMyCharacter(characterId){
+        return new myCharacter(request.getAfetch(env.babe_api_url + `/ko/api/characters/${characterId}/edit`));
     }
     getChatrooms(): Array<interfaces.chatroom>{
         return request.getAfetch(env.babe_api_url + "/ko/api/messages");

@@ -190,3 +190,76 @@ export interface messageResponse {
 export interface setMessageResponse {
     success:boolean;
 }
+
+export interface characterDetails{
+    date: string;
+    details: string;
+    dislikes: Array<string>;
+    height: string;
+    interests: Array<string>;
+    jobs: Array<string>;
+    likes: Array<string>;
+    location: string;
+    replySuggestions: Array<string>;
+    weight: string;
+}
+
+export interface character{
+    characterDetails: characterDetails;
+    characterId: string;
+    chatCount: number;
+    chatUserCount: number;
+    createdAt: string;
+    creatorNickname: string;
+    creatorUserId: string;
+    description: string;
+    hasEmotionImages: any;
+    id: string;
+    isAdult: boolean;
+    isBabies: boolean;
+    likeCount: number;
+    mainImage: string;
+    name: string;
+    profileImageUrl: string;
+    tags: Array<string>;
+    visibility: string;
+}
+
+export interface image{
+    emotion: string;
+    hidden: boolean;
+    order: number;
+    url: string;
+}
+
+export interface keywordBook{
+    content: string;
+    id: number;
+    keywords: Array<string>;
+    order: number;
+    title: string;
+}
+
+export interface myCharacter{
+    category: number ;
+    characterDetails: string;
+    date: string;
+    description: string;
+    details: string;
+    dislikes: Array<string>;
+    hashtags: Array<string>;
+    height: string;
+    images: Array<image>;
+    initialAction: string;
+    initialMessage: string;
+    interests: Array<string>;
+    isAdult: boolean;
+    jobs: Array<string>;
+    keywordBooks: Array<keywordBook>; 
+    likes: Array<string>;
+    location: string;
+    name: string;
+    replySuggestions: Array<string>,
+    visibility: string;
+    weight: string;
+}

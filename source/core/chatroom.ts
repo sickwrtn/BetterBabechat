@@ -211,12 +211,12 @@ function sumButton(chatbar: HTMLTextAreaElement){
                     chatbar.value = lastest[1];
                 }
             }
+            lastest = [chatbar.className,chatbar.value];
         }
         else{
             debug("ifchangedclass",6);
             clearInterval(ifchangedclass);
         }
-        lastest = [chatbar.className,chatbar.value];
     })
     //단축키 이벤트
     window.addEventListener("keydown", (e) => keysPressed(e,chatbar,text), false);

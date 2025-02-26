@@ -87,3 +87,40 @@ export function parent(element: any,index: number): HTMLElement{
     }
     return result;
 }
+
+export function getParams(): any{
+    try{
+        let result: any = {};
+        let l = document.URL.split("/");
+        let c = l[l.length-1].split("?")[1].split("&");
+        for (const i of c) {
+            result[i.split("=")[0]] = i.split("=")[1];
+        }
+        if (result.tab == undefined){
+            result["tab"] = "all";
+        }
+        if (result.sort == undefined){
+            result["sort"] = "popular";
+        }
+        return result;
+    }
+    catch {
+        return {
+            tab : "all",
+            sort : "popular",
+        }
+    }
+}
+
+export function reParams(params): any{
+    let param = "";
+    for (let i = 0; i < Object.keys(params).length; i++) {
+        if (i+1 != Object.keys(params).length){
+            param += `${Object.keys(params)[i]}=${params[Object.keys(params)[i]]}&`;
+        }
+        else{
+            param += `${Object.keys(params)[i]}=${params[Object.keys(params)[i]]}`;
+        }
+    }
+    return param;
+}
