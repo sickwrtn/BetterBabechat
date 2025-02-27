@@ -46,6 +46,9 @@ export class myCharacter {
     set(data: interfaces.myCharacter){
         console.log(data.hashtags);
         console.log(data.images);
+        for (let i = 0; i < data.keywordBooks.length; i++) {
+            delete data.keywordBooks[i].id;
+        }
         let re_data = {
             name: data.name,
             description: data.description,

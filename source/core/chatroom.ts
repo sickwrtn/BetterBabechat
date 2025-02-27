@@ -246,7 +246,7 @@ function ReloadOnclick(ReloadList,chats,chatroom){
         */
         ReloadList[ReloadList.length] = [chats.item(chats.length - 3).cloneNode(true),chatroom.getMessages().messages[0]];
         let now = chats.item(chats.length - 3) as HTMLElement;
-        let buttonTabs = now.getElementsByClassName(env.ChatBottumClass).item(1);
+        let buttonTabs = now.getElementsByClassName(env.ChatBottomClass).item(1);
         buttonTabs.childNodes.item(2).addEventListener('click',()=>{
             ReloadOnclick(ReloadList,chats,chatroom);
         })
@@ -281,8 +281,8 @@ function onload(chats): boolean{
     //리롤 리스트에 focus 된 채팅 리롤 목록에 저장
     ReloadList[ReloadList.length] = [chat.cloneNode(true),chatroom.getMessages().messages[0]];
     //focus 된 채팅의 리롤 버튼에 Event 추가
-    if (chat.getElementsByClassName(env.ChatBottumClass).item(1) != null){
-        chat.getElementsByClassName(env.ChatBottumClass).item(1).childNodes.item(2).addEventListener('click',()=>{
+    if (chat.getElementsByClassName(env.ChatBottomClass).item(1) != null){
+        chat.getElementsByClassName(env.ChatBottomClass).item(1).childNodes.item(2).addEventListener('click',()=>{
             ReloadOnclick(ReloadList,chats,chatroom);
         });
         return true;
