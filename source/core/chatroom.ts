@@ -1,4 +1,4 @@
-import { ChatOnload, ChatOnloadNoStop, ChatReload, getCharacterId, getRoomId, parent, sleep } from "../tools/functions";
+import { ChatOnload, ChatReload, getCharacterId, getRoomId, parent, sleep } from "../tools/functions";
 import { ChatBar } from "../class/class";
 import * as env from "../.env/env";
 import { debug } from "../tools/debug";
@@ -12,10 +12,6 @@ var keys = [];
 
 //리롤중인지 기록
 var isReload: boolean = false;
-
-setInterval(()=>{
-    console.log(isReload);
-},300)
 
 //단축키
 function keysPressed(e,chatbar: HTMLTextAreaElement,list: ChatBar) {
@@ -258,6 +254,7 @@ function ReloadOnclick(ReloadList,chats,chatroom){
             let button = buttonTabs.childNodes.item(2).cloneNode(true)
             button.textContent = `${index + 1}`;
             button.addEventListener('click',()=>{
+                debug("reload button",3);
                 babe.getMessage(chatroom.getMessages().messages[0]).set(ReloadList[index][1].content);
                 for (const i of Array.from(now.childNodes[0].childNodes).slice(0,now.childNodes[0].childNodes.length - 1)) {
                     i.remove();
@@ -343,8 +340,8 @@ export function chatroom(): void{
             }
             ChatReceived(chats,()=>{
                 let checkOnload = setInterval(()=>{
-                    debug("checkOnload Received",6);
                     if (onload(chats)){
+                        debug("checkOnload Received",6);
                         clearInterval(checkOnload);
                     }
                 })
@@ -358,7 +355,7 @@ export function chatroom(): void{
                 const MemoryAfterburnerMenu = ChatSaveMenu.childNodes.item(0).cloneNode(true) as HTMLButtonElement;
                 if (ChatSaveMenu.childNodes.length == 2){
                     MemoryAfterburnerMenu.innerHTML = env.MemoryAfterburner_frontHtml + env.MemoryAfterburner_name;
-                    MemoryAfterburnerMenu.addEventListener('click',MemoryAfterburner_Modal)
+                    MemoryAfterburnerMenu.addEventListener('click',MemoryAfterburner_Modal);
                     ChatSaveMenu.appendChild(MemoryAfterburnerMenu);
                 }
             }

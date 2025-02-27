@@ -2,6 +2,8 @@
 
 //namespace
 export const MemoryAfterburner_name = "애프터버너";
+export const copy = "복사";
+export const paste = "붙여넣기";
 
 //environment
 export const sendLimit = 2000;

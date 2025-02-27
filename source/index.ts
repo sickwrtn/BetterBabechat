@@ -17,8 +17,9 @@ if (localStorage.getItem(env.local_Gemini_api_key) == null){
 
 const babe = new babe_api_class();
 
-console.log(babe.getMyCharacters({sort:"popular",tab:"all"}));
-console.log(babe.getMyCharacters({sort:"likes",tab:"all"}));
+console.log(babe.getMyCharacters({tab:"all",sort:"oldest"}));
+console.log(babe.getMyCharacters({tab:"all",sort:"latest"}));
+console.log(babe.getMyCharacters({tab:"all",sort:"likes"}));
 
 window.onload = ()=>{
     var lastest = "";

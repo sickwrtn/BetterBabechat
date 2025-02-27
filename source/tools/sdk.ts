@@ -38,8 +38,41 @@ export class chatroom_class implements interfaces.chatroom_class{
 
 export class myCharacter {
     data : interfaces.myCharacter;
-    constructor(data){
+    characterId : string;
+    constructor(data, characterId){
         this.data = data;
+        this.characterId = characterId;
+    }
+    set(data: interfaces.myCharacter){
+        console.log(data.hashtags);
+        console.log(data.images);
+        let re_data = {
+            name: data.name,
+            description: data.description,
+            image: data.images[0].url,
+            emotionImages: data.images.slice(1,data.images.length),
+            characterDetails: data.characterDetails,
+            initialAction: data.initialAction,
+            initialMessage: data.initialMessage,
+            isAdult: data.isAdult,
+            visibility: data.visibility,
+            category: data.category,
+            keywordBooks: data.keywordBooks,
+            tags: data.hashtags,
+            details: {
+                jobs:data.jobs,
+                interests: data.interests,
+                likes: data.likes,
+                dislikes: data.dislikes,
+                date: data.date,
+                location: data.location,
+                height: data.height,
+                weight: data.weight,
+                details: data.details,
+                replySuggestions: data.replySuggestions
+            }
+        }
+        return request.putAfetch(env.babe_api_url + `/ko/api/characters/${this.characterId}/edit`,re_data);
     }
 }
 
@@ -73,15 +106,19 @@ export class babe_api_class implements interfaces.babe_api_class {
     }
     getMyCharacters(params): Array<interfaces.character>{
         let response: Array<interfaces.character> = request.getAfetch(env.babe_api_url + "/ko/api/characters/my?" + reParams(params));
-        /*
         if (params.sort == "likes"){
             response.sort((a: interfaces.character,b: interfaces.character) => b.likeCount - a.likeCount); 
         }
-            */
+        else if (params.sort == "latest"){
+            response.sort((a: interfaces.character,b: interfaces.character) => Number(new Date(b.createdAt)) - Number(new Date(a.createdAt))); 
+        }
+        else if (params.sort == "oldest"){
+            response.sort((a: interfaces.character,b: interfaces.character) => Number(new Date(a.createdAt)) - Number(new Date(b.createdAt))); 
+        }
         return response;
     }
     getMyCharacter(characterId){
-        return new myCharacter(request.getAfetch(env.babe_api_url + `/ko/api/characters/${characterId}/edit`));
+        return new myCharacter(request.getAfetch(env.babe_api_url + `/ko/api/characters/${characterId}/edit`),characterId);
     }
     getChatrooms(): Array<interfaces.chatroom>{
         return request.getAfetch(env.babe_api_url + "/ko/api/messages");
