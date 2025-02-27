@@ -77,6 +77,22 @@ export interface chatroom_class{
     send(prompt: string,model: string,proChatCount: number): string;
 }
 
+export interface myCharacter_class{
+    /**
+     * 캐릭터의 json 데이터
+     */
+    data : myCharacter;
+    /**
+     * 캐릭터의 id
+     */
+    characterId : string;
+    /**
+     * 캐릭터 덮어쓰기
+     * @param data 덮어쓸데이터
+     */
+    set(data: myCharacter): any
+}
+
 export interface babe_api_class{
     /**
      * 유저 정보
@@ -105,6 +121,11 @@ export interface babe_api_class{
      * @param data 채팅 데이터 
      */
     getMessage(data: message): message_class;
+    /**
+     * 캐릭터 조회
+     * @param params get 파라미터 
+     */
+    getMyCharacters(params): Array<character>;
 }
 
 export interface userSocialLogin{

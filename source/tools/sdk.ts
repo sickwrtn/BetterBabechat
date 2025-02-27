@@ -36,14 +36,14 @@ export class chatroom_class implements interfaces.chatroom_class{
     }
 }
 
-export class myCharacter {
+export class myCharacter implements interfaces.myCharacter_class{
     data : interfaces.myCharacter;
     characterId : string;
     constructor(data, characterId){
         this.data = data;
         this.characterId = characterId;
     }
-    set(data: interfaces.myCharacter){
+    set(data: interfaces.myCharacter): any{
         console.log(data.hashtags);
         console.log(data.images);
         for (let i = 0; i < data.keywordBooks.length; i++) {
