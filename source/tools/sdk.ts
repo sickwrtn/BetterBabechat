@@ -2,6 +2,7 @@ import * as interfaces from "../interface/interfaces";
 import * as request from "../tools/requests";
 import * as env from "../.env/env";
 import { reParams } from "./functions";
+import { debug } from "./debug";
 
 
 export class message_class implements interfaces.message_class{
@@ -44,8 +45,6 @@ export class myCharacter implements interfaces.myCharacter_class{
         this.characterId = characterId;
     }
     set(data: interfaces.myCharacter): any{
-        console.log(data.hashtags);
-        console.log(data.images);
         for (let i = 0; i < data.keywordBooks.length; i++) {
             delete data.keywordBooks[i].id;
         }
@@ -61,6 +60,7 @@ export class myCharacter implements interfaces.myCharacter_class{
             visibility: data.visibility,
             category: data.category,
             keywordBooks: data.keywordBooks,
+            systemPrompt: data.systemPrompt,
             tags: data.hashtags,
             details: {
                 jobs:data.jobs,
@@ -76,6 +76,40 @@ export class myCharacter implements interfaces.myCharacter_class{
             }
         }
         return request.putAfetch(env.babe_api_url + `/ko/api/characters/${this.characterId}/edit`,re_data);
+    }
+    publish(visibility: string): any{
+        let data: interfaces.myCharacter = this.data;
+        for (let i = 0; i < data.keywordBooks.length; i++) {
+            delete data.keywordBooks[i].id;
+        }
+        let re_data = {
+            name: data.name,
+            description: data.description,
+            image: data.images[0].url,
+            emotionImages: data.images.slice(1,data.images.length),
+            characterDetails: data.characterDetails,
+            initialAction: data.initialAction,
+            initialMessage: data.initialMessage,
+            isAdult: data.isAdult,
+            visibility: visibility,
+            category: data.category,
+            keywordBooks: data.keywordBooks,
+            systemPrompt: data.systemPrompt,
+            tags: data.hashtags,
+            details: {
+                jobs:data.jobs,
+                interests: data.interests,
+                likes: data.likes,
+                dislikes: data.dislikes,
+                date: data.date,
+                location: data.location,
+                height: data.height,
+                weight: data.weight,
+                details: data.details,
+                replySuggestions: data.replySuggestions
+            }
+        }
+        return request.postAfetch(env.babe_api_url + `/ko/api/characters/create`,re_data);
     }
 }
 
@@ -108,8 +142,12 @@ export class babe_api_class implements interfaces.babe_api_class {
         return result;
     }
     getMyCharacters(params): Array<interfaces.character>{
+        debug(JSON.stringify(params));
         let response: Array<interfaces.character> = request.getAfetch(env.babe_api_url + "/ko/api/characters/my?" + reParams(params));
-        if (params.sort == "likes"){
+        if (params.sort == "popular"){
+            response.sort((a: interfaces.character,b: interfaces.character) => b.chatCount - a.chatCount);
+        }
+        else if (params.sort == "likes"){
             response.sort((a: interfaces.character,b: interfaces.character) => b.likeCount - a.likeCount); 
         }
         else if (params.sort == "latest"){

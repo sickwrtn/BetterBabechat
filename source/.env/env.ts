@@ -4,6 +4,7 @@
 export const MemoryAfterburner_name = "애프터버너";
 export const copy = "복사";
 export const paste = "붙여넣기";
+export const publish = "게시";
 
 //environment
 export const sendLimit = 2000;
@@ -19,10 +20,10 @@ export const local_Gemini_api_key = "Gemini Api Key";
 export const ChatSaveMenuClass = "grid grid-cols-2";
 export const ChatBottomClass = "flex gap-3";
 export const DropDownClass = "z-50 min-w-32 overflow-hidden rounded-md border border-gray-500 bg-[#333] p-1 text-white shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2";
-export const MyCharacterClass = "absolute right-0 top-0";
 
 //Id
 export const MessageAreaId = "messages-area";
+export const MyCharactersId = "my-character-dropdown-menu-trigger";
 
 //svg 코드
 export const PlusButton_svg_d = "M 524 250 c 0 17.7 -8 32 -32 32 H 317 v 176 c 0 17.7 -14.3 32 -32 32 s -32 -14.3 -32 -32 V 284 H 64 c -17.7 0 -32 -14.3 -32 -32 s 14.3 -32 32 -32 h 189 V 64 c 0 -17.7 14.3 -32 32 -32 s 32 14.3 32 32 v 157 h 176 c 24 1 31 13 31 28 z";

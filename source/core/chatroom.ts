@@ -1,5 +1,5 @@
 import { ChatOnload, ChatReload, getCharacterId, getRoomId, parent, sleep } from "../tools/functions";
-import { ChatBar } from "../class/class";
+import { ChatBar_class } from "../class/class";
 import * as env from "../.env/env";
 import { debug } from "../tools/debug";
 import * as request from "../tools/requests";
@@ -14,7 +14,7 @@ var keys = [];
 var isReload: boolean = false;
 
 //단축키
-function keysPressed(e,chatbar: HTMLTextAreaElement,list: ChatBar) {
+function keysPressed(e,chatbar: HTMLTextAreaElement,list: ChatBar_class) {
     keys[e.keyCode] = true;
     for (let i = 0; i < 58; i++) {
         if (keys[17] && keys[49 + i]) {
@@ -221,7 +221,7 @@ function sumButton(chatbar: HTMLTextAreaElement){
     const buttons = parent(chatbar,2).childNodes.item(2) as HTMLDivElement;
     buttons.style.cssText = `position: absolute; bottom: 110%; border: 1px solid; border-radius: 20px; border-color: rgba(221,221,221,0.8); padding-right: 5px;`
     const new_button = buttons.childNodes.item(0).cloneNode(true) as HTMLButtonElement;
-    const text = new ChatBar(buttons,new_button);
+    const text = new ChatBar_class(buttons,new_button);
     text.setPlus(() => {
         if (chatbar.value == "") return alert("단축내용을 지정해주세요");
         text.add(String(text.button.length - 1),(button)=>{

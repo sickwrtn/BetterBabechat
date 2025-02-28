@@ -1,7 +1,12 @@
 import * as env from "../.env/env";
 import * as interfaces from "../interface/interfaces";
+import { debug } from "../tools/debug";
+import { getParams } from "../tools/functions";
+import { babe_api_class } from "../tools/sdk";
 
-export class ChatBar implements interfaces.ChatBar{
+const babe = new babe_api_class();
+
+export class ChatBar_class implements interfaces.ChatBar_class{
     button: Array<[HTMLButtonElement,string?]>;
     Chatbar: HTMLDivElement;
     struct: HTMLButtonElement; 
@@ -41,5 +46,33 @@ export class ChatBar implements interfaces.ChatBar{
     }
     setMinus(event:EventListener): void{
         this.button[this.button.length - 1][0].addEventListener('click',event);
+    }
+}
+
+export class dropdown_class implements interfaces.dropdown_class{
+    item: Array<[string,interfaces.dropdownEvent]>
+    constructor(){
+        this.item = [];
+    }
+    addDropdown(name: string,event: interfaces.dropdownEvent): void{
+        this.item[this.item.length] = [name,event];
+    }
+    apply(dropdownElement,characterList: Array<boolean>): void{
+        for (const item of this.item) {
+            const new_dropdown = dropdownElement.childNodes.item(0).cloneNode(true);
+            const new_dropdown_space = dropdownElement.childNodes.item(1).cloneNode(true);
+            new_dropdown.textContent = item[0];
+            new_dropdown.addEventListener('click',()=>{
+                debug("copy_dropdown",3);
+                for (let i = 0; i < characterList.length; i++) {
+                    if (characterList[i]){
+                        const character = babe.getMyCharacter(babe.getMyCharacters(getParams())[i].characterId);
+                        item[1](character);
+                    }
+                }
+            })
+            dropdownElement.appendChild(new_dropdown_space);
+            dropdownElement.appendChild(new_dropdown);
+        }
     }
 }

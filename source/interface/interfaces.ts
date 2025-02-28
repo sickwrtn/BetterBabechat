@@ -1,5 +1,5 @@
 //ChatBar 클래스 규격
-export interface ChatBar {
+export interface ChatBar_class {
     /**
      * 단축버튼 배열 [HTMLButtonELement,string?]
      */
@@ -35,6 +35,21 @@ export interface ChatBar {
     setMinus(event:EventListener);
 }
 
+export interface dropdown_class{
+    /**
+     * 드랍다운 메뉴 추가
+     * @param name 이름
+     * @param event 이벤트리스너
+     */
+    addDropdown(name: string,event: dropdownEvent): void
+    /**
+     * 추가한 드랍다운 메뉴 적용
+     * @param dropdownElement Element
+     * @param characterList 현재 드랍다운된 캐릭터
+     */
+    apply(dropdownElement,characterList: Array<boolean>): void
+}
+
 //파라미터 함수 규격
 export interface ChatBarEvenListener{
     /**
@@ -44,6 +59,9 @@ export interface ChatBarEvenListener{
 }
 export interface ChatOnloadEvent{
     (chats: NodeListOf<ChildNode>,interval?: NodeJS.Timeout ): void;
+}
+export interface dropdownEvent{
+    (character: myCharacter_class): void;
 }
 
 //SDK class 규격
@@ -90,7 +108,8 @@ export interface myCharacter_class{
      * 캐릭터 덮어쓰기
      * @param data 덮어쓸데이터
      */
-    set(data: myCharacter): any
+    set(data: myCharacter): any;
+    publish(visibility: string): any;
 }
 
 export interface babe_api_class{
@@ -276,6 +295,7 @@ export interface myCharacter{
     interests: Array<string>;
     isAdult: boolean;
     jobs: Array<string>;
+    systemPrompt: string;
     keywordBooks: Array<keywordBook>; 
     likes: Array<string>;
     location: string;
