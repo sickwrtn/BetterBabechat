@@ -76,3 +76,23 @@ export class dropdown_class implements interfaces.dropdown_class{
         }
     }
 }
+
+export class chatroomMenu_class implements interfaces.chatroomMenu_class{
+    item : Array<[string,string,EventListener]>;
+    constructor(){
+        this.item = [];
+    }
+    addMenu(name: string,html: string,event: EventListener): void{
+        this.item.push([name,html,event]);
+    }
+    apply(ChatSaveMenu: HTMLDivElement): void{
+        for (const item of this.item) {
+            const new_Menu = ChatSaveMenu.childNodes.item(0).cloneNode(true) as HTMLButtonElement;
+            if (ChatSaveMenu.childNodes.length == 2){
+                new_Menu.innerHTML = item[1] + item[0];
+                new_Menu.addEventListener('click',item[2]);
+                ChatSaveMenu.appendChild(new_Menu);
+            }
+        }
+    }
+}

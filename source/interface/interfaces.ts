@@ -50,6 +50,12 @@ export interface dropdown_class{
     apply(dropdownElement,characterList: Array<boolean>): void
 }
 
+export interface chatroomMenu_class{
+    item: Array<[string,string,EventListener]>;
+    addMenu(name: string,html: string,event: EventListener): void;
+    apply(ChatSaveMenu: HTMLDivElement): void
+}
+
 //파라미터 함수 규격
 export interface ChatBarEvenListener{
     /**

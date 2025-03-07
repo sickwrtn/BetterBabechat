@@ -319,7 +319,7 @@ export function ChatReceived(chats,event){
         lastest = chats.length;
     })
 }
-export function chatroom(): void{
+export function chatroom(chatroomMenus: interfaces.chatroomMenu_class): void{
     //채팅방의 채팅바 선택
     const chatbar = document.getElementsByTagName("textarea").item(0) as HTMLTextAreaElement;
     if(chatbar != null){
@@ -352,12 +352,8 @@ export function chatroom(): void{
         if (document.URL.includes('character') && document.URL.split("/").length > 6){
             const ChatSaveMenu = document.getElementsByClassName(env.ChatSaveMenuClass).item(0) as HTMLDivElement;
             if (ChatSaveMenu != null){
-                const MemoryAfterburnerMenu = ChatSaveMenu.childNodes.item(0).cloneNode(true) as HTMLButtonElement;
-                if (ChatSaveMenu.childNodes.length == 2){
-                    MemoryAfterburnerMenu.innerHTML = env.MemoryAfterburner_frontHtml + env.MemoryAfterburner_name;
-                    MemoryAfterburnerMenu.addEventListener('click',MemoryAfterburner_Modal);
-                    ChatSaveMenu.appendChild(MemoryAfterburnerMenu);
-                }
+                chatroomMenus.addMenu(env.MemoryAfterburner_name,env.MemoryAfterburner_frontHtml, MemoryAfterburner_Modal);
+                chatroomMenus.apply(ChatSaveMenu);
             }
         }
         else {

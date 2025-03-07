@@ -1,6 +1,6 @@
 import { copyToClipboard, getClipboardTextModern } from "./tools/functions";
 import * as env from "./.env/env";
-import { dropdown_class } from "./class/class";
+import { chatroomMenu_class, dropdown_class } from "./class/class";
 import { main } from "./main";
 
 //Gemini api key 스토리지 초기설정
@@ -15,6 +15,8 @@ if (localStorage.getItem(env.local_Gemini_api_key) == null){
 }
 
 const dropdown = new dropdown_class();
+
+const chatroomMenus = new chatroomMenu_class();
 
 dropdown.addDropdown(env.copy,(character)=>{
     copyToClipboard(JSON.stringify(character.data));
@@ -55,4 +57,4 @@ dropdown.addDropdown(env.publish,(character)=>{
     window.location.reload();
 })
 
-window.onload = ()=>main(dropdown);
+window.onload = ()=> main(dropdown,chatroomMenus);
