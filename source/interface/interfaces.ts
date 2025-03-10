@@ -51,9 +51,22 @@ export interface dropdown_class{
 }
 
 export interface chatroomMenu_class{
+    /**
+     * 챗룸 메뉴가 들어가는 배열
+     */
     item: Array<[string,string,EventListener]>;
+    /**
+     * 챗룸 메뉴 추가
+     * @param name 메뉴 이름
+     * @param html 메뉴 아이콘 html
+     * @param event 메뉴 클릭시 이벤트
+     */
     addMenu(name: string,html: string,event: EventListener): void;
-    apply(ChatSaveMenu: HTMLDivElement): void
+    /**
+     * 챗룸 메뉴 추가 및 적용
+     * @param ChatSaveMenu 챗룸 메뉴 ELEMENT 
+     */
+    apply(ChatSaveMenu: HTMLDivElement): void;
 }
 
 //파라미터 함수 규격

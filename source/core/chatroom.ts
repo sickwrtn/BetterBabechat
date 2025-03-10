@@ -323,11 +323,14 @@ export function chatroom(chatroomMenus: interfaces.chatroomMenu_class): void{
     //채팅방의 채팅바 선택
     const chatbar = document.getElementsByTagName("textarea").item(0) as HTMLTextAreaElement;
     if(chatbar != null){
+        // 다양한 문제로 단축키 기능 제거
+        /*
         //기존 버튼이 없을시
         if (parent(chatbar,2).childNodes.item(2).childNodes.length < 4){
             //단축버튼 기능
             sumButton(chatbar);
         }
+        */
         //채팅 로드가 완료 되었을시
         ChatOnload((chats)=>{
             if (babe.getChatroom(getCharacterId(),getRoomId()) != undefined){
@@ -350,8 +353,10 @@ export function chatroom(chatroomMenus: interfaces.chatroomMenu_class): void{
     }
     let apply_chatMenu = setInterval(()=>{
         if (document.URL.includes('character') && document.URL.split("/").length > 6){
-            const ChatSaveMenu = document.getElementsByClassName(env.ChatSaveMenuClass).item(0) as HTMLDivElement;
+            const ChatSaveMenu = document.getElementById(env.ChatSaveMenuId) as HTMLDivElement;
             if (ChatSaveMenu != null){
+                console.log("event");
+                //챗룸 메뉴 추가 및 적용
                 chatroomMenus.addMenu(env.MemoryAfterburner_name,env.MemoryAfterburner_frontHtml, MemoryAfterburner_Modal);
                 chatroomMenus.apply(ChatSaveMenu);
             }

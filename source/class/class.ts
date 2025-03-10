@@ -55,7 +55,7 @@ export class dropdown_class implements interfaces.dropdown_class{
         this.item = [];
     }
     addDropdown(name: string,event: interfaces.dropdownEvent): void{
-        this.item[this.item.length] = [name,event];
+        this.item.push([name,event]);
     }
     apply(dropdownElement,characterList: Array<boolean>): void{
         for (const item of this.item) {
