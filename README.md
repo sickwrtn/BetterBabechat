@@ -1,4 +1,10 @@
 
+<p align="center">
+    <a href="https://chromewebstore.google.com/detail/fast-wrtn/hnnhijlhpgclphofnplplfimbnfhddeg" target="_blank">
+        <img src="https://raw.githubusercontent.com/sickwrtn/BetterBabechat/refs/heads/main/dist/icons/icon-128x128.png" width="200px"/>
+    </a>
+</p>
+
 # TODO
 
 -채팅방 단축기능 O (개선중)
